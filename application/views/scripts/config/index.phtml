@@ -1,0 +1,44 @@
+<div class="controls">
+    <?= /** @var \Icinga\Web\Widget\Tabs $tabs */ $tabs ?>
+</div>
+<div class="content">
+    <?= /** @var \Icinga\Web\View $this */ $this->qlink(
+        $this->translate('Add'),
+        'bridgedays_input_netrp/config/add',
+        null,
+        [
+            'class'            => 'button-link',
+            'data-base-target' => '_next',
+            'icon'             => 'plus',
+            'title'            => $this->translate('Add NETRP instance')
+        ]
+    ) ?>
+
+    <table data-base-target="_next" class="table-row-selectable common-table">
+        <thead>
+            <tr>
+                <th><?= $this->translate('Name') ?></th>
+                <th><?= $this->translate('URL') ?></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php /** @var \Icinga\Repository\Repository $repo */ foreach ($repo as $netRp): ?>
+            <tr href="<?= $this->href('bridgedays_input_netrp/config/edit', ['name' => $netRp->name]) ?>">
+                <td><?= $this->escape($netRp->name) ?></td>
+                <td><?= $this->escape($netRp->url) ?></td>
+                <td><?= $this->qlink(
+                    null,
+                    'bridgedays_input_netrp/config/remove',
+                    ['name' => $netRp->name],
+                    [
+                        'class'            => 'action-link',
+                        'icon'             => 'trash',
+                        'title'            => $this->translate('Remove NETRP instance')
+                    ]
+                ) ?></td>
+            </tr>
+        <?php endforeach ?>
+        </tbody>
+    </table>
+</div>
